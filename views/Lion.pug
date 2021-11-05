@@ -1,0 +1,32 @@
+h1= title
+  p Search results for Lion 
+  p 
+  div(class="container-fluid")
+        div(class="row")
+            -
+                let Lion = [
+                    {
+                        "Breed": "chowchow",
+                        "cost": 300,
+                        "color": "Gold"
+                    },
+                    {
+                        "Breed": "meowmeow",
+                        "cost": 400,
+                        "color": "goldersilver"
+                    },
+                    {
+                        "Breed": "Leonberger",
+                        "cost": 600,
+                        "color": "goldenbrown"
+                    },                   
+                ]
+            each v,index in Lion 
+                div(class="col-sm-2" onclick=`buy(${index})`) #{v.Breed}
+                div(class="col-sm-2" onclick=`buy(${index})`) #{v.cost}
+                div(class="col-sm-2" onclick=`buy(${index})`) #{v.color}
+  Script.
+         function buy(intemNo) 
+        {
+             alert (`Your selected ${intemNo+1}`)
+        }
