@@ -1,8 +1,15 @@
 var Lion = require('../models/Lion');
 // List of all Lion
-exports.Lion_list = function(req, res) {
- res.send('NOT IMPLEMENTED: Lion list');
-};
+exports.Lion_list = async function(req, res) {
+    try{
+    theLion = await Lion .find();
+    res.send(theLion);
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    }
+   };
 // for a specific Lion.
 exports.Lion_detail = function(req, res) {
  res.send('NOT IMPLEMENTED: Lion detail: ' + req.params.id);
