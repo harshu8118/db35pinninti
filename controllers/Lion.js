@@ -26,3 +26,14 @@ exports.Lion_delete = function(req, res) {
 exports.Lion_update_put = function(req, res) {
  res.send('NOT IMPLEMENTED: Lion update PUT' + req.params.id);
 };
+exports.Lion_view_all_Page = async function(req, res) {
+    try{
+    theLion = await Lion.find();
+    res.render('Lion', { title: 'Lion Search Results', results: theLion });
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    }
+   };
+   
