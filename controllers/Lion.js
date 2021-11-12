@@ -11,9 +11,17 @@ exports.Lion_list = async function(req, res) {
     }
    };
 // for a specific Lion.
-exports.Lion_detail = function(req, res) {
- res.send('NOT IMPLEMENTED: Lion detail: ' + req.params.id);
-};
+exports.Lion_detail = async function(req, res) { 
+    console.log("detail"  + req.params.id) 
+    try { 
+        result = await Lion.findById( req.params.id) 
+        res.send(result) 
+    } catch (error) { 
+        res.status(500) 
+        res.send(`{"error": document for id ${req.params.id} not found`); 
+    } 
+}; 
+ 
 // Handle Lion create on POST.
 exports.Lion_create_post = async function(req, res) {
     console.log(req.body)
@@ -39,9 +47,26 @@ exports.Lion_delete = function(req, res) {
  res.send('NOT IMPLEMENTED: Lion delete DELETE ' + req.params.id);
 };
 // Handle Lion update form on PUT.
-exports.Lion_update_put = function(req, res) {
- res.send('NOT IMPLEMENTED: Lion update PUT' + req.params.id);
-};
+exports.Lion_update_put = async function(req, res) { 
+    console.log(`update on id ${req.params.id} with body 
+${JSON.stringify(req.body)}`) 
+    try { 
+        let toUpdate = await Lion.findById( req.params.id) 
+        // Do updates of properties 
+        if(req.body.Lion_type)  
+               toUpdate.Lion_type = req.body.Lion_type; 
+        if(req.body.cost) toUpdate.cost = req.body.cost; 
+        if(req.body.size) toUpdate.size = req.body.size; 
+        let result = await toUpdate.save(); 
+        console.log("Sucess " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": ${err}: Update for id ${req.params.id} 
+failed`); 
+    } 
+}; 
+//handle a show all views
 exports.Lion_view_all_Page = async function(req, res) {
     try{
     theLion = await Lion.find();
