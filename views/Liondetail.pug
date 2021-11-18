@@ -1,0 +1,19 @@
+extends layout
+block content
+ h1= title
+ if (toShow == null)
+  h2 No instance to Lion detail
+ else 
+  - let Lionid = toShow._id
+  - let Lion_type = toShow.Lion_type
+  - let Lionsize = toShow.size
+  - let Lioncost = toShow.cost
+ div
+  div.row
+   div(class='LionAttr mr-3') Lion ID is: #{Lionid}
+  div.row
+   div(class='Lion mr-3') Lion Type is: #{Lion_type}
+  div.row
+   div(class='LionAttr mr-3') Lion Size is: #{Lionsize}
+  div.row
+   div(class='Lion mr-3') Lion Cost is: #{Lioncost}

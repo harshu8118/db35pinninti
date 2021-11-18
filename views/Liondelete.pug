@@ -1,0 +1,51 @@
+extends layout
+block content
+ h1= title
+ if (toShow == null)
+  h2 No instance to Delete
+ else
+  - let Lionid = toShow._id
+  - let Lion_type = toShow.Lion_type
+  - let Lioncost = toShow.cost
+  - let Lionsize = toShow.size
+  - let actionid = "/resource/Lion/" + Lionid
+  script let actionid = "#{actionid}"
+  div
+   div.row
+    div(class='LionAttr mr-3') Lion ID is:
+    div #{Lionid}
+   div.row
+    div(class='LionAttr mr-3') Lion Type is:
+    div #{Lion_type}
+   div.row
+    div(class='LionAttr mr-3') Lion Size is:
+    div #{Lionsize}
+   div.row
+    div(class='LionAttr mr-3') Lion Cost is:
+    div #{Lioncost}
+
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+
+  script.
+    function cancel() {
+      // Go back to the home page for the Lion collection
+      window.location.href='/Lion'
+    }
+  script.
+    function deleteOnid() {
+      console.log("starting delete")
+      // delete first
+      fetch(actionid, {
+        method: 'DELETE'      // Don't need a body for the delete
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Delete succeded")
+        window.location.href='/Lion'
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Delete failed " + error )
+      });
+    }

@@ -1,0 +1,46 @@
+extends layout
+block content
+ h1= title
+ if (toShow == null)
+  h2 No instance to Update Lion
+ else 
+  - let Lionid = toShow._id
+  - let Lion_type = toShow.Lion_type
+  - let Lioncost = toShow.cost
+  - let Lionsize = toShow.size
+    
+    div.row(class='mb-2')
+        div.mr-1 ID is
+        div #{Lionid}
+  -let actionid = "/resource/Lion" + Lionid
+    form(id='LionForm', action= actionid, method="PUT")
+        div.form-group
+            label.LionAttr(for='Lion_type') Lion Type
+            input#Lion_type(type='text', name='Lion_type', value= Lion_type )
+        div.form-group
+            label.LionAttr(for='Lioncost') Lion Price
+            input#cost(type='number', name='Lioncost', value= cost)
+        div.form-group
+            label.LionAttr(for='Lionsize') Lion Size
+            input#size(type='text', name='Lionsize', value= size )
+
+        input(type="submit")
+
+    script.
+        document.forms['LionForm'].addEventListener('submit', (event) => {
+        event.preventDefault();
+        console.log(event.target)
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+            method: 'PUT',
+            body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((resp) => {
+           return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+           alert("Update succeded")
+            // TODO handle body
+        }).catch((error) => {
+            // TODO handle error
+           alert("Update failed " + error )
+        });
+      });
