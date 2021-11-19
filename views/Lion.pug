@@ -1,33 +1,22 @@
-h1= title
-- let Lion = results
-  p Search results for Lion 
-  p 
-  div(class="container-fluid")
-        div(class="row")
-            -
-                let Lion = [
-                    {
-                        "Breed": "chowchow",
-                        "cost": 300,
-                        "color": "Gold"
-                    },
-                    {
-                        "Breed": "meowmeow",
-                        "cost": 400,
-                        "color": "goldersilver"
-                    },
-                    {
-                        "Breed": "Leonberger",
-                        "cost": 600,
-                        "color": "goldenbrown"
-                    },                   
-                ]
-            each v,index in Lion 
-                div(class="col-sm-2" onclick=`buy(${index})`) #{v.Breed}
-                div(class="col-sm-2" onclick=`buy(${index})`) #{v.cost}
-                div(class="col-sm-2" onclick=`buy(${index})`) #{v.color}
-  Script.
-         function buy(intemNo) 
-        {
-             alert (`Your selected ${intemNo+1}`)
-        }
+extends layout
+
+block content
+
+  h1= title
+  - let array=[{"Lion_type":"Barbary Lion","size":"large","cost":566},{"Lion_type":"West African","size":"medium","cost":7890},{"Lion_type":"Masai Lion","size":"small","cost":6000}]
+  - let items = results
+   div(class="container-fluid")
+    div(class="row m-1")
+     each item in array
+      - let destination = `dispatch(\"/fan/update?id=${item._id}\")`
+      div(class="col-sm-4",class="m-l") Brand: #{item.Lion_type}
+      div(class="col-sm-4",class="m-l") price: #{item.size}
+      div(class="col-sm-4",class="m-l") price: #{item.cost}
+        button.btn( class="btn-primary ml-1", onclick= destination) Update
+
+
+
+   script.
+     function dispatch(path){
+       window.location.href=path
+     }
