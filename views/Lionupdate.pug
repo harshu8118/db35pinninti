@@ -1,46 +1,47 @@
 extends layout
+
 block content
- h1= title
- if (toShow == null)
-  h2 No instance to Update Lion
- else 
-  - let Lionid = toShow._id
-  - let Lion_type = toShow.Lion_type
-  - let Lioncost = toShow.cost
-  - let Lionsize = toShow.size
-    
+  h1= title
+
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let Lionid = toShow._id
+    - let LionBrand = toShow.Brand
+    - let Lioncost = toShow.cost
+    - let Lioncolor = toShow.size
+  
     div.row(class='mb-2')
-        div.mr-1 ID is
-        div #{Lionid}
-  -let actionid = "/resource/Lion" + Lionid
+      div.mr-1 ID is
+      div #{Lionid}
+    - let actionid = "/resource/Lion/" + Lionid
     form(id='LionForm', action= actionid, method="PUT")
-        div.form-group
-            label.LionAttr(for='Lion_type') Lion Type
-            input#Lion_type(type='text', name='Lion_type', value= Lion_type )
-        div.form-group
-            label.LionAttr(for='Lioncost') Lion Price
-            input#cost(type='number', name='Lioncost', value= cost)
-        div.form-group
-            label.LionAttr(for='Lionsize') Lion Size
-            input#size(type='text', name='Lionsize', value= size )
+      div.form-group
+          label.LionAttr(for='Brand') Lion Brand
+          input#Brand(type='text', name='Brand', value= LionBrand )
+      div.form-group
+          label.LionAttr(for='cost') Lion cost
+          input#cost(type='number', name='cost', value= Lioncost )
+      div.form-group
+          label.LionAttr(for='size') Lion size
+          input#size(type='text', name='size', value= Lionsize )
+      input(type="submit")
 
-        input(type="submit")
-
-    script.
-        document.forms['LionForm'].addEventListener('submit', (event) => {
-        event.preventDefault();
-        console.log(event.target)
-        // TODO do something here to show user that form is being submitted
-        fetch(event.target.action, {
-            method: 'PUT',
-            body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-        }).then((resp) => {
-           return resp.text(); // or resp.text() or whatever the server sends
-        }).then((body) => {
-           alert("Update succeded")
-            // TODO handle body
-        }).catch((error) => {
-            // TODO handle error
-           alert("Update failed " + error )
-        });
+  script.
+    document.forms['LionForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      console.log(event.target)
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
       });
+    });
